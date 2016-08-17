@@ -109,7 +109,7 @@ public class AutoPilot {
 
 	/**
 	 * Use this constructor for delayed binding to VTDNav which allows the reuse
-	 * of XPath expression
+	 * of XPath expression.
 	 *
 	 */
 	public AutoPilot() {
@@ -129,24 +129,26 @@ public class AutoPilot {
 
 	/**
 	 * This function creates URL ns prefix and is intended to be called prior to
-	 * selectXPath
+	 * selectXPath.
 	 * 
 	 * @param prefix
+	 *            The prefix to associate with the given namespace. The caller
+	 *            is expected to ensure that this is a valid XML prefix.
 	 * @param URL
+	 *            The namespace to declare in the current scope. The caller is
+	 *            expected to ensure that the URI is a valid namespace name. 
 	 */
-
 	final public void declareXPathNameSpace(String prefix, String URL) {
 		if (nsHash == null)
 			nsHash = new Hashtable();
 		nsHash.put(prefix, URL);
-		// System.out.println(ht);
 	}
 
 	/**
 	 * Bind is to replace rebind() and setVTDNav() It resets the internal state
-	 * of AutoPilot so one can attach a VTDNav object to the autopilot
+	 * of AutoPilot, so one can attach a VTDNav object to the autopilot.
 	 * 
-	 * @param vnv
+	 * @param vnv {@link VTDNav VTD Navigator} which we want to set to the {@link AutoPilot}.
 	 *
 	 */
 	public void bind(VTDNav vnv) {
@@ -188,7 +190,7 @@ public class AutoPilot {
 	}
 
 	/**
-	 * Remove all declared variable expressions
+	 * Remove all declared variable expressions.
 	 */
 	final public void clearVariableExprs() {
 		symbolHash.clear();
@@ -253,10 +255,9 @@ public class AutoPilot {
 
 	/**
 	 * Iterate over all the selected element nodes in document order. Null
-	 * element name allowed, corresponding to node() in xpath Creation date:
-	 * (12/4/03 5:25:42 PM)
+	 * element name allowed, corresponding to node() in xpath.
 	 * 
-	 * @return boolean
+	 * @return boolean if the itteration is sucessfully.
 	 * @exception com.ximpleware.NavException
 	 *                See description in method toElement() in VTDNav class.
 	 */
@@ -428,9 +429,9 @@ public class AutoPilot {
 	}
 
 	/**
-	 * This method implements the attribute axis for XPath
+	 * Implements the attribute axis for XPath.
 	 * 
-	 * @return the integer of the selected VTD index for attribute name
+	 * @return the integer of the selected VTD index for attribute name.
 	 * @throws PilotException
 	 */
 	protected int iterateAttr2() throws PilotException, NavException {
@@ -677,8 +678,8 @@ public class AutoPilot {
 	}
 
 	/**
-	 * Select all descendent elements along the Descendent axis, withns
-	 * awareness
+	 * Select all descendant elements along the Descendent axis, with namespace
+	 * awareness.
 	 * 
 	 * @param ns_URL
 	 * @param ln
@@ -792,9 +793,9 @@ public class AutoPilot {
 
 	/**
 	 * Select an attribute name for iteration, * choose all attributes of an
-	 * element
+	 * element.
 	 * 
-	 * @param en
+	 * @param en name of attribute which want to select.
 	 */
 	public void selectAttr(String en) {
 		if (en == null)
@@ -808,8 +809,10 @@ public class AutoPilot {
 	/**
 	 * Select an attribute name, both local part and namespace URL part
 	 * 
-	 * @param ns_URL
-	 * @param ln
+	 * @param ns_URL namespace URI for the qualified name f the attribute which want to select.
+	 * @param ln Local part of the qualified name of the attribute which want to select.
+	 * 
+	 * @throws {@link IllegalArgumentException IllegalArgumentException} if the {@code ln} is {@code null}.
 	 */
 	final public void selectAttrNS(String ns_URL, String ln) {
 		if (ln == null)
@@ -822,13 +825,14 @@ public class AutoPilot {
 	}
 
 	/**
-	 * This method selects the string representing XPath expression Usually
-	 * evalXPath is called afterwards
+	 * This method selects the {@link String string} representing XPath
+	 * expression. Usually evalXPath is called afterwards.
 	 * 
 	 * @param s
+	 *            XPath expression which want to select.
 	 * @throws XPathParseException
+	 *             if there is syntax error in the specified XPath.
 	 */
-
 	public void selectXPath(String s) throws XPathParseException {
 		try {
 			parser p = new parser(new StringReader(s));
@@ -847,11 +851,10 @@ public class AutoPilot {
 	}
 
 	/**
-	 * Reset the XPath so the XPath Expression can be reused and revaluated in
+	 * Reset the XPath, so that the XPath Expression can be reused and revaluated in
 	 * anther context position
 	 *
 	 */
-
 	final public void resetXPath() {
 		if (xpe != null && vn != null) {
 			xpe.reset(vn);
